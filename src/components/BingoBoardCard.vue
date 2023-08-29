@@ -83,6 +83,7 @@ function start() {
 
 function reset() {
   const newNumbers = [];
+  console.log(newNumbers);
   while (newNumbers.length < 25) {
     const randomNumber = Math.floor(Math.random() * 99) + 1;
     if (!newNumbers.includes(randomNumber)) {
