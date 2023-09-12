@@ -24,7 +24,7 @@
         color="deep-purple"
         variant="elevated"
         class="text-sm"
-        :disabled="!startBtn"
+        :disabled="!disableStartBtn"
         @click="start"
         >Start</v-btn
       >
@@ -47,10 +47,10 @@ const bingo = ref(null);
 const showRandomNumber = ref(false);
 const showWinner = ref(false);
 let startBingo = ref(null);
-const startBtn = ref(true);
+const disableStartBtn = ref(true);
 const includedColumnIndexes = ref([]);
 
-const timeMultiplier = 0.2;
+const TIME_MULTIPLYER = 0.2;
 
 const currentTime = ref(Date.now());
 
@@ -58,15 +58,17 @@ const titleStyles = computed(() => {
   // Logic for RGB Title Name
 
   const r = Math.round(
-    Math.abs(Math.sin(currentTime.value * timeMultiplier)) * 255
+    Math.abs(Math.sin(currentTime.value * TIME_MULTIPLYER)) * 255
   );
   const g = Math.round(
-    Math.abs(Math.sin(currentTime.value * timeMultiplier + (2 * Math.PI) / 3)) *
-      255
+    Math.abs(
+      Math.sin(currentTime.value * TIME_MULTIPLYER + (2 * Math.PI) / 3)
+    ) * 255
   );
   const b = Math.round(
-    Math.abs(Math.sin(currentTime.value * timeMultiplier + (4 * Math.PI) / 3)) *
-      255
+    Math.abs(
+      Math.sin(currentTime.value * TIME_MULTIPLYER + (4 * Math.PI) / 3)
+    ) * 255
   );
 
   return {
@@ -79,7 +81,7 @@ setInterval(() => {
 
 function start() {
   // Logic for generating random numbers
-  startBtn.value = false;
+  disableStartBtn.value = false;
   showRandomNumber.value = true;
   startBingo.value = setInterval(() => {
     bingo.value = Math.floor(Math.random() * 99) + 1;
@@ -106,7 +108,7 @@ watch(
   }
 );
 function reset() {
-  startBtn.value = true;
+  disableStartBtn.value = true;
   // logic for resetting the bingo board
   const newNumbers = [];
   while (newNumbers.length < 25) {
